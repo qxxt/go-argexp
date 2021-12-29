@@ -1,8 +1,6 @@
-package argexp
+package main
 
 import (
-	"fmt"
-	"os"
 	"regexp"
 	"strconv"
 	"strings"
@@ -26,22 +24,32 @@ func Marshall(flags []string) (res string) {
 	return
 }
 
-func GetString(args *string, flag string) string {
-	re := regexp.MustCompile(strconv.Quote(flag) + `(".*?[^\\]")`)
-	arres := re.FindStringSubmatch(*args)
+func GetString(flags *string, findFlag string) (res string) {
+	rgx := regexp.MustCompile(strconv.Quote(findFlag) + `(".*?[^\\]")`)
+	arres := rgx.FindStringSubmatch(*flags)
 	if len(arres) > 0 {
-		*args = re.ReplaceAllString(*args, "")
-		res, _ := strconv.Unquote(arres[1])
-		return res
+		*flags = rgx.ReplaceAllString(*flags, "")
+		res, _ = strconv.Unquote(arres[1])
 	}
-	return ""
+	return
 }
 
-func GetBool(args *string, flag string) bool {
-	pattern := strconv.Quote(flag)
-	if strings.Contains(*args, pattern) {
-		*args = strings.Replace(*args, pattern, "", 1)
-		return true
+func GetBool(flags *string, findFlags ...string) (res bool) {
+	for i := 0; i < len(findFlags); i++ {
+		pattern := strconv.Quote(findFlags[i])
+		if strings.Contains(*flags, pattern) {
+			*flags = strings.Replace(*flags, pattern, "", 1)
+			res = true
+		}
 	}
-	return false
+	return
+}
+
+func UnMarshall(flags *string) (res []string) {
+	arres := regexp.MustCompile(`".*?[^\\]"`).FindAllString(*flags, -1)
+	for i := 0; i < len(arres); i++ {
+		strres, _ := strconv.Unquote(arres[i])
+		res = append(res, strres)
+	}
+	return
 }
