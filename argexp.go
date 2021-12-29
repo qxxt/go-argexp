@@ -28,7 +28,7 @@ func Marshall(args []string) (res string) {
 }
 
 func GetString(args *string, flag string) string {
-	re := regexp.MustCompile(strconv.Quote(flag) + `(".*?[^\\\"]")`)
+	re := regexp.MustCompile(strconv.Quote(flag) + `(".*?[^\\]")`)
 	arres := re.FindStringSubmatch(*args)
 	if len(arres) > 0 {
 		*args = re.ReplaceAllString(*args, "")
