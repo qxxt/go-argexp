@@ -8,23 +8,22 @@ import (
 	"strings"
 )
 
-func Marshall(args []string) (res string) {
-	var withEqualCharacter []string
-	var multipleBoolean []string
-	for _, arg := range args {
-		if m, _ := regexp.MatchString(`^(\-{2}(\-*\w)+)=.*$`, arg); m {
-			withEqualCharacter = strings.SplitN(arg, "=", 2)
+func Marshall(flags []string) (res string) {
+	rgx := regexp.MustCompile(`^--(\w[-]?)+=.*$`)
+	rgx2 := regexp.MustCompile(`^-(\w+)`)
+	for i := 0; i < len(flags); i++ {
+		if rgx.MatchString(flags[i]) {
+			withEqualCharacter := strings.SplitN(flags[i], "=", 2)
 			res += strconv.Quote(withEqualCharacter[0])
 			res += strconv.Quote(withEqualCharacter[1])
-		} else if m, _ := regexp.MatchString(`^\-(\w+)`, arg); m {
-			arg = strings.TrimLeft(arg, "-")
-			multipleBoolean = strings.Split(arg, "")
-			res += `"-` + strings.Join(multipleBoolean, `""-`) + `"`
+		} else if rgx2.MatchString(flags[i]) {
+			flags[i] = strings.TrimLeft(flags[i], "-")
+			res += `"-` + strings.Join(strings.Split(flags[i], ""), `""-`) + `"`
 		} else {
-			res += strconv.Quote(arg)
+			res += strconv.Quote(flags[i])
 		}
 	}
-	return res
+	return
 }
 
 func GetString(args *string, flag string) string {
