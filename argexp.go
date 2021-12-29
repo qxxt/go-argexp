@@ -26,10 +26,10 @@ func Marshall(flags []string) (res string) {
 
 func GetString(flags *string, findFlag string) (res string) {
 	rgx := regexp.MustCompile(strconv.Quote(findFlag) + `(".*?[^\\]")`)
-	arres := rgx.FindStringSubmatch(*flags)
-	if len(arres) > 0 {
+	arrRes := rgx.FindStringSubmatch(*flags)
+	if len(arrRes) > 0 {
 		*flags = rgx.ReplaceAllString(*flags, "")
-		res, _ = strconv.Unquote(arres[1])
+		res, _ = strconv.Unquote(arrRes[1])
 	}
 	return
 }
@@ -46,9 +46,9 @@ func GetBool(flags *string, findFlags ...string) (res bool) {
 }
 
 func UnMarshall(flags *string) (res []string) {
-	arres := regexp.MustCompile(`".*?[^\\]"`).FindAllString(*flags, -1)
-	for i := 0; i < len(arres); i++ {
-		strres, _ := strconv.Unquote(arres[i])
+	arrRes := regexp.MustCompile(`".*?[^\\]"`).FindAllString(*flags, -1)
+	for i := 0; i < len(arrRes); i++ {
+		strres, _ := strconv.Unquote(arrRes[i])
 		res = append(res, strres)
 	}
 	return
