@@ -51,4 +51,22 @@ func Example_arguments() {
 	for i := 0; i < len(b); i++ {
 		fmt.Printf("%q\n", b[i])
 	}
+
+	// Output:
+	// parsed arguments:
+	// message: this is (") an escape string
+	// number: 123456
+	// url: https://google.com
+	//	verbose: true
+	//	trace: true
+	//	x: true
+	//	y: true
+	//	z: true
+	//
+	//	leftover arguments:
+	//	"-a"
+	//	"-b"
+	//	"-c"
+	//		   "emacs rocks!!"
+
 }
