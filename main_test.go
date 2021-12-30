@@ -3,16 +3,18 @@ package argexp_test
 import (
 	"fmt"
 	"strconv"
+	"testing"
 
 	"github.com/qxxt/go-argexp"
 )
 
-func Example_basic() {
+func Test_basic(t *testing.T) {
 	// this is a sample slices of arguments (string) produced by os.Args
 	// It is the equivalent of the following arguments:
 	// --message "this is (\") an escape string" --number 123456 --verbose --url=https://google.com -txyzabc "emacs rocks!!"
-	sampleArgs := []string{"--message", "this is (\") an escape string", "--number", "123456", "--verbose", "--url=https://google.com", "-txyzabc", "emacs rocks!!"}
+	sampleArgs := []string{"--message", "this is (\") a\n escape string\"", "--number", "123456", "--verbose", "--url=https://google.com", "-txyzabc", "emacs rocks!!"}
 	a := argexp.Marshall(sampleArgs)
+	fmt.Println("a: ", a)
 	message := argexp.GetString(&a, "--message")
 	url := argexp.GetString(&a, "--url")
 
