@@ -57,16 +57,15 @@ func Example_arguments() {
 	// message: this is (") an escape string
 	// number: 123456
 	// url: https://google.com
-	//	verbose: true
-	//	trace: true
-	//	x: true
-	//	y: true
-	//	z: true
+	// verbose: true
+	// trace: true
+	// x: true
+	// y: true
+	// z: true
 	//
-	//	leftover arguments:
-	//	"-a"
-	//	"-b"
-	//	"-c"
-	//		   "emacs rocks!!"
-
+	// leftover arguments:
+	// "-a"
+	// "-b"
+	// "-c"
+	// "emacs rocks!!"
 }
