@@ -1,2 +1,2 @@
-# go-argexp
-Regexp based argument parser for golang
+# Do not use this
+Also see: [https://github.com/qxxt/go-getopt](https://github.com/qxxt/go-getopt)
